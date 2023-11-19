@@ -1,0 +1,14 @@
+README.md
+setup.cfg
+setup.py
+powershell_kernel/__init__.py
+powershell_kernel/__main__.py
+powershell_kernel/install.py
+powershell_kernel/kernel.py
+powershell_kernel/powershell_proxy.py
+powershell_kernel/subprocess_repl.py
+powershell_kernel/util.py
+powershell_kernel.egg-info/PKG-INFO
+powershell_kernel.egg-info/SOURCES.txt
+powershell_kernel.egg-info/dependency_links.txt
+powershell_kernel.egg-info/top_level.txt
