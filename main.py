@@ -4,12 +4,14 @@ from objects.chessboard import Chessboard
 active = True
 
 surface = pygame.display.set_mode((2560/2, 1440/2))
-rect = pygame.Rect((8, 8, 8, 8))
 
 chessboard = Chessboard(surface)
-chessboard.build_board(80,80)
+# chessboard.build_board(80,80)
 
-#pygame.draw.rect(surface, "red", rect)
+# rect = pygame.Rect((8, 8, 8, 8))
+# pygame.draw.rect(surface, "red", rect)
+
+chessboard.draw(surface)
 
 while active:
 
