@@ -1,5 +1,4 @@
-from objects.field import *
-
+from objects.singlefield import *
 
 class Chessboard:
     def __init__(self, _surface):
@@ -7,14 +6,13 @@ class Chessboard:
 
         self.fields = []
         for x in range(0, 8):
-            row = []
-
+            column = []
             for y in range(0, 8):
-                row.append(Field(x, y))
+                column.append(SingleField(x, y))
 
-            self.fields.append(row)
+            self.fields.append(column)
 
     def draw(self, surface):
-        for col in self.fields:
-            for row in col:
+        for column in self.fields:
+            for row in column:
                 row.draw(surface)

@@ -1,17 +1,17 @@
-from objects.field import Field
+from objects.singlefield import SingleField
 
 
 class CoordinatesHandler:
 
     field_coordinates = [
-        [Field(0, 0), Field(0, 0), Field(0, 0), Field(0, 0), Field(0, 0), Field(0, 0), Field(0, 0), Field(0, 0)],
-        [Field(0, 0), Field(0, 0), Field(0, 0), Field(0, 0), Field(0, 0), Field(0, 0), Field(0, 0), Field(0, 0)],
-        [Field(0, 0), Field(0, 0), Field(0, 0), Field(0, 0), Field(0, 0), Field(0, 0), Field(0, 0), Field(0, 0)],
-        [Field(0, 0), Field(0, 0), Field(0, 0), Field(0, 0), Field(0, 0), Field(0, 0), Field(0, 0), Field(0, 0)],
-        [Field(0, 0), Field(0, 0), Field(0, 0), Field(0, 0), Field(0, 0), Field(0, 0), Field(0, 0), Field(0, 0)],
-        [Field(0, 0), Field(0, 0), Field(0, 0), Field(0, 0), Field(0, 0), Field(0, 0), Field(0, 0), Field(0, 0)],
-        [Field(0, 0), Field(0, 0), Field(0, 0), Field(0, 0), Field(0, 0), Field(0, 0), Field(0, 0), Field(0, 0)],
-        [Field(0, 0), Field(0, 0), Field(0, 0), Field(0, 0), Field(0, 0), Field(0, 0), Field(0, 0), Field(0, 0)],
+        [SingleField(0, 0), SingleField(0, 0), SingleField(0, 0), SingleField(0, 0), SingleField(0, 0), SingleField(0, 0), SingleField(0, 0), SingleField(0, 0)],
+        [SingleField(0, 0), SingleField(0, 0), SingleField(0, 0), SingleField(0, 0), SingleField(0, 0), SingleField(0, 0), SingleField(0, 0), SingleField(0, 0)],
+        [SingleField(0, 0), SingleField(0, 0), SingleField(0, 0), SingleField(0, 0), SingleField(0, 0), SingleField(0, 0), SingleField(0, 0), SingleField(0, 0)],
+        [SingleField(0, 0), SingleField(0, 0), SingleField(0, 0), SingleField(0, 0), SingleField(0, 0), SingleField(0, 0), SingleField(0, 0), SingleField(0, 0)],
+        [SingleField(0, 0), SingleField(0, 0), SingleField(0, 0), SingleField(0, 0), SingleField(0, 0), SingleField(0, 0), SingleField(0, 0), SingleField(0, 0)],
+        [SingleField(0, 0), SingleField(0, 0), SingleField(0, 0), SingleField(0, 0), SingleField(0, 0), SingleField(0, 0), SingleField(0, 0), SingleField(0, 0)],
+        [SingleField(0, 0), SingleField(0, 0), SingleField(0, 0), SingleField(0, 0), SingleField(0, 0), SingleField(0, 0), SingleField(0, 0), SingleField(0, 0)],
+        [SingleField(0, 0), SingleField(0, 0), SingleField(0, 0), SingleField(0, 0), SingleField(0, 0), SingleField(0, 0), SingleField(0, 0), SingleField(0, 0)],
     ]
 
     def get_coordinates(self, y_axis, x_axis):
