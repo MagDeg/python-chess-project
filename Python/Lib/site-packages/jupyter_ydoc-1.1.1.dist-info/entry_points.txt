@@ -1,0 +1,5 @@
+[jupyter_ydoc]
+blob = jupyter_ydoc.yblob:YBlob
+file = jupyter_ydoc.yfile:YFile
+notebook = jupyter_ydoc.ynotebook:YNotebook
+unicode = jupyter_ydoc.yunicode:YUnicode
