@@ -4,6 +4,7 @@ from objects.chessboard import Chessboard
 
 # variable to represent status of display; ture = display still running, false = display was exited
 active = True
+mouse_pos = 0
 
 screen_size = ScreenSize()
 surface = pygame.display.set_mode((screen_size.surface_size, screen_size.surface_size))
@@ -16,6 +17,11 @@ while active:
 
     # searching all running events
     for event in pygame.event.get():
+        if event.type == pygame.MOUSEBUTTONUP:
+            mouse_pos = pygame.mouse.get_pos()
+
+            print(chessboard.check_mouse_position(mouse_pos))
+
         # if exit event recognised (pressing exit button) leaving loop
         if event.type == pygame.QUIT:
             active = False
