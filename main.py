@@ -8,9 +8,12 @@ from objects.figures.pawn import Pawn
 active = True
 mouse_pos = 0
 
+# initialising class for screen size getter
 screen_size = ScreenSize()
+# defining size of shwon screen with scaled screen size (got from screen size class)
 surface = pygame.display.set_mode((screen_size.surface_size, screen_size.surface_size))
 
+# initialising 
 chessboard = Chessboard(surface)
 chessboard.draw(surface)
 chessboard.fields[0][0].set_figure(Pawn("black", 1, 1))
