@@ -1,5 +1,6 @@
 from objects.singlefield import *
 
+
 class Chessboard:
     def __init__(self, _surface):
         self.surface = _surface

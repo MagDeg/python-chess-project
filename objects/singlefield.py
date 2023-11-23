@@ -1,6 +1,6 @@
 from functions.draw import PygameLocal
 from functions.get_screen_size import ScreenSize
-
+from functions.color import Color
 
 class SingleField:
     def __init__(self, _x, _y):
@@ -19,20 +19,21 @@ class SingleField:
         return self.figure
 
     def draw(self, surface):
+        color_ref = Color()
         x1 = self.x * self.w
         y1 = self.y * self.h
-        color = "white"
+        color = color_ref.field_white
 
         if self.x % 2 == 0:
             if self.y % 2 == 0:
-                color = "black"
+                color = color_ref.field_black
             else:
-                color = "white"
+                color = color_ref.field_white
         else:
             if self.y % 2 == 0:
-                color = "white"
+                color = color_ref.field_white
             else:
-                color = "black"
+                color = color_ref.field_black
 
         pygame_local = PygameLocal(surface)
         pygame_local.drawRect(color, x1, y1, self.w, self.h)

@@ -3,6 +3,7 @@ from functions.get_screen_size import ScreenSize
 from objects.chessboard import Chessboard
 from objects.figures.pawn import Pawn
 
+
 # variable to represent status of display; ture = display still running, false = display was exited
 active = True
 mouse_pos = 0
