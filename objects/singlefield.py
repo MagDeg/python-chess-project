@@ -10,7 +10,13 @@ class SingleField:
         self.y = _y
         self.w = int(screen_size.get_single_field_size())
         self.h = self.w
-        print(self.w)
+        self.figure = 0
+
+    def set_figure(self, _figure):
+        self.figure = _figure
+
+    def check_figure(self):
+        return self.figure
 
     def draw(self, surface):
         x1 = self.x * self.w

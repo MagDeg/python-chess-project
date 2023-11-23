@@ -21,7 +21,4 @@ class Pawn:
 
 
 
-bauer1 = Pawn("black")
-bauer1.color
-bauer2 = Pawn("weiß")
-bauer2.movementType()
+

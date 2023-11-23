@@ -1,6 +1,7 @@
 import pygame
 from functions.get_screen_size import ScreenSize
 from objects.chessboard import Chessboard
+from objects.figures.pawn import Pawn
 
 # variable to represent status of display; ture = display still running, false = display was exited
 active = True
@@ -11,6 +12,8 @@ surface = pygame.display.set_mode((screen_size.surface_size, screen_size.surface
 
 chessboard = Chessboard(surface)
 chessboard.draw(surface)
+chessboard.fields[0][0].set_figure(Pawn("black", 1, 1))
+print(chessboard.fields[0][0].check_figure().color)
 
 # prevents display from closing if code finished
 while active:
