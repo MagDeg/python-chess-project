@@ -1,15 +1,14 @@
+from objects.figures.base_figure import BaseFigure
 
 
-class Pawn:
-    def __init__(self, _color, start_x, start_y):
-        self.color = _color
-        self.start_x = start_x
-        self.start_y = start_y
-    def movementAllowed(self,_x,_y, startmode_pawn):
-        _delta_x = (self.start_x - _x)
-        _delta_y = (self.start_y - _y)
-        if (startmode_pawn == True) and (_delta_x == 0):
-            if self.color == "Black" and (_delta_y == 1 or _delta_y == 2) or (self.color == "White" and (_delta_y == -1 or _delta_y == -2)):
+class Pawn(BaseFigure):
+
+    def movement_allowed(self, x, y):
+        _delta_x = (self.start_x - x)
+        _delta_y = (self.start_y - y)
+        if (self.moved == False) and (_delta_x == 0):
+            if self.color == "Black" and (_delta_y == 1 or _delta_y == 2) or \
+                    (self.color == "White" and (_delta_y == -1 or _delta_y == -2)):
                 return True
         else:
             if (self.color == "Black") and (_delta_y == 1):
@@ -18,8 +17,8 @@ class Pawn:
                 return True
         return False
 
-
-
-pawn = Pawn("White", 2, 2)
-var = pawn.movementType(2,3,True)
-print(var)
+    def move(self, x, y):
+        if self.movement_allowed(x, y):
+            if not self.moved:
+                self.moved = True
+            # move figure
