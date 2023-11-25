@@ -11,13 +11,21 @@ class SingleField:
         self.y = _y
         self.w = int(screen_size.get_single_field_size())
         self.h = self.w
-        self.figure = 0
+        self.figure = None
 
-    def set_figure(self, _figure):
-        self.figure = _figure
+    def set_figure(self, figure):
+        self.figure = figure
 
-    def check_figure(self):
+    def get_figure(self):
         return self.figure
+
+    def draw_figure(self, x, y, surface):
+        self.figure.draw(x, y, surface)
+
+
+        # just for debugging
+        pygame_local = PygameLocal(surface)
+        pygame_local.drawRect("red", x * self.w, y * self.h, self.w, self.h)
 
     def draw(self, surface):
         color_ref = Color()

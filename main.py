@@ -17,8 +17,27 @@ color = Color()
 pygame.init()
 chessboard = Chessboard(surface)
 chessboard.draw(surface)
-chessboard.fields[0][0].set_figure(Pawn(color.BLACK, 1, 1))
-print(chessboard.fields[0][0].check_figure().color)
+chessboard.fields[0][0].set_figure(Pawn(color.WHITE, 0, 0))
+
+
+def tempoaray_moving_method(x_pos_actual, y_pos_actual, x_pos_new, y_pos_new):
+    # check if move is allowed
+    if chessboard.fields[x_pos_actual][y_pos_actual].figure.check_movement_allowance(x_pos_new, y_pos_new):
+        # add figure from start field to new field
+        chessboard.fields[x_pos_new][y_pos_new].set_figure(chessboard.fields[x_pos_actual][y_pos_actual].figure)
+        # resetting start field figure to none
+        chessboard.fields[x_pos_actual][y_pos_actual].set_figure(None)
+        # draw figure to new field
+        chessboard.fields[x_pos_new][y_pos_new].draw_figure(x_pos_new, y_pos_new, surface)
+    else:
+        print("irregular move")
+
+
+field_selected = None
+
+
+
+
 
 # prevents display from closing if code finished
 while running:
@@ -28,14 +47,11 @@ while running:
     # searching all running events
     for event in pygame.event.get():
         if event.type == pygame.MOUSEBUTTONUP:
-            mouse_pos = pygame.mouse.get_pos()
-
-            print(chessboard.check_mouse_position(mouse_pos))
+            chessboard.on_select(pygame.mouse.get_pos())
 
         # if exit event recognised (pressing exit button) leaving loop
         if event.type == pygame.QUIT:
             running = False
-
 
 # closing window
 pygame.quit()
