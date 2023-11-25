@@ -28,7 +28,7 @@ def tempoaray_moving_method(x_pos_actual, y_pos_actual, x_pos_new, y_pos_new):
         # resetting start field figure to none
         chessboard.fields[x_pos_actual][y_pos_actual].set_figure(None)
         # draw figure to new field
-        chessboard.fields[x_pos_new][y_pos_new].draw_figure(x_pos_new, y_pos_new, surface)
+        chessboard.fields[x_pos_new][y_pos_new]._draw_figure(x_pos_new, y_pos_new, surface)
     else:
         print("irregular move")
 
