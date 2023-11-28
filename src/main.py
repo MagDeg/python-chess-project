@@ -35,10 +35,6 @@ def tempoaray_moving_method(x_pos_actual, y_pos_actual, x_pos_new, y_pos_new):
 
 field_selected = None
 
-
-
-
-
 # prevents display from closing if code finished
 while running:
 

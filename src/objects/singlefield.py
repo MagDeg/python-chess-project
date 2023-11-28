@@ -22,7 +22,7 @@ class SingleField:
     def _draw_figure(self, x, y, surface):
         if self.figure is None:
             return
-        self.figure.draw(x, y, surface)
+        self.figure.draw(x, y, surface, self.w)
 
     def draw(self, surface):
         color_ref = Color()
@@ -37,4 +37,4 @@ class SingleField:
         pygame_local = PygameLocal(surface)
         pygame_local.drawRect(color, x1, y1, self.w, self.h)
 
-        self._draw_figure(x1, y1, surface)
+        self._draw_figure(self.x, self.y, surface)
