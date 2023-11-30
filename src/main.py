@@ -1,8 +1,13 @@
 import pygame
 from functions.get_screen_size import ScreenSize
 from objects.chessboard import Chessboard
+from objects.figures.bishop import Bishop
+from objects.figures.king import King
+from objects.figures.knight import Knight
 from objects.figures.pawn import Pawn
 from functions.color import Color
+from objects.figures.queen import Queen
+from objects.figures.rook import Rook
 
 running = True
 
@@ -16,35 +21,57 @@ color = Color()
 
 def temporary_setting_figures_method(fields):
     # black figures
+    # pawns
     for i in range(0, 8):
         fields[i][1].set_figure(Pawn(color.WHITE, i, 1))
 
+    # rooks
+    fields[0][0].set_figure(Rook(color.WHITE, 0, 0))
+    fields[7][0].set_figure(Rook(color.WHITE, 7, 0))
+
+    # bishops
+    fields[2][0].set_figure(Bishop(color.WHITE, 2, 0))
+    fields[5][0].set_figure(Bishop(color.WHITE, 5, 0))
+
+    # knights
+    fields[1][0].set_figure(Knight(color.WHITE, 1, 0))
+    fields[6][0].set_figure(Knight(color.WHITE, 6, 0))
+
+    # queen
+    fields[3][0].set_figure(Queen(color.WHITE, 3, 0))
+
+    # king
+    fields[4][0].set_figure(King(color.WHITE, 4, 0))
+
     # white figures
+    # pawns
     for i in range(0, 8):
         fields[i][6].set_figure(Pawn(color.BLACK, i, 6))
+
+    # rooks
+    fields[0][7].set_figure(Rook(color.BLACK, 0, 7))
+    fields[7][7].set_figure(Rook(color.BLACK, 7, 7))
+
+    # bishops
+    fields[2][7].set_figure(Bishop(color.BLACK, 2, 7))
+    fields[5][7].set_figure(Bishop(color.BLACK, 5, 7))
+
+    # knights
+    fields[1][7].set_figure(Knight(color.BLACK, 1, 7))
+    fields[6][7].set_figure(Knight(color.BLACK, 6, 7))
+
+    # queen
+    fields[3][7].set_figure(Queen(color.BLACK, 3, 7))
+
+    # king
+    fields[4][7].set_figure(King(color.BLACK, 4, 7))
 
 # initialising
 pygame.init()
 chessboard = Chessboard(surface)
 temporary_setting_figures_method(chessboard.fields)
-chessboard.fields[0][1].set_figure(Pawn(color.WHITE, 0, 0))
+
 chessboard.draw(surface)
-
-
-def tempoaray_moving_method(x_pos_actual, y_pos_actual, x_pos_new, y_pos_new):
-    # check if move is allowed
-    if chessboard.fields[x_pos_actual][y_pos_actual].figure.check_movement_allowance(x_pos_new, y_pos_new):
-        # add figure from start field to new field
-        chessboard.fields[x_pos_new][y_pos_new].set_figure(chessboard.fields[x_pos_actual][y_pos_actual].figure)
-        # resetting start field figure to none
-        chessboard.fields[x_pos_actual][y_pos_actual].set_figure(None)
-        # draw figure to new field
-        chessboard.fields[x_pos_new][y_pos_new]._draw_figure(x_pos_new, y_pos_new, surface)
-    else:
-        print("irregular move")
-
-
-field_selected = None
 
 # prevents display from closing if code finished
 while running:

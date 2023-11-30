@@ -12,6 +12,27 @@ class SingleField:
         self.w = int(screen_size.get_single_field_size())
         self.h = self.w
         self.figure = None
+        self.color = None
+
+        color = Color()
+        if (self.x + self.y) % 2 == 0:
+            self.color = color.FIELD_BLACK
+        else:
+            self.color = color.FIELD_WHITE
+
+    def set_hover_color(self):
+        color = Color()
+        if self.color == color.FIELD_WHITE:
+            self.color = color.FIELD_SELECTED_WHITE
+        else:
+            self.color = color.FIELD_SELECTED_BLACK
+
+    def remove_hover_color(self):
+        color = Color()
+        if self.color == color.FIELD_SELECTED_WHITE:
+            self.color = color.FIELD_WHITE
+        else:
+            self.color = color.FIELD_BLACK
 
     def set_figure(self, figure):
         self.figure = figure
@@ -25,16 +46,11 @@ class SingleField:
         self.figure.draw(x, y, surface, self.w)
 
     def draw(self, surface):
-        color_ref = Color()
+
         x1 = self.x * self.w
         y1 = self.y * self.h
 
-        if (self.x + self.y) % 2 == 0:
-            color = color_ref.FIELD_BLACK
-        else:
-            color = color_ref.FIELD_WHITE
-
         pygame_local = PygameLocal(surface)
-        pygame_local.drawRect(color, x1, y1, self.w, self.h)
+        pygame_local.drawRect(self.color, x1, y1, self.w, self.h)
 
         self._draw_figure(self.x, self.y, surface)
