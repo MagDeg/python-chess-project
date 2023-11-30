@@ -14,7 +14,7 @@ running = True
 # initialising class for screen size getter
 screen_size = ScreenSize()
 # defining size of shown screen with scaled screen size (got from screen size class)
-surface = pygame.display.set_mode((screen_size.surface_size, screen_size.surface_size))
+surface = pygame.display.set_mode((screen_size.surface_size + screen_size.surface_size*0.30, screen_size.surface_size))
 
 color = Color()
 

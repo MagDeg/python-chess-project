@@ -12,7 +12,6 @@ class Pawn(BaseFigure):
             self.img = pygame.image.load("images/white_pawn.png").convert_alpha()
         else:
             self.img = pygame.image.load("images/black_pawn.png").convert_alpha()
-        self.move = None
 
     def check_movement_allowance(self, field):
 
@@ -42,16 +41,14 @@ class Pawn(BaseFigure):
         return False
 
     def _change_moved(self):
-        print("prechange:" + str(self.moved))
-        if self.moved is None:
-            self.moved = False
-            return
+        print("pre-change:" + str(self.moved))
         if self.moved is False:
             self.moved = True
             return
 
     def draw(self, x, y, surface, size):
-        self._change_moved()
+        if not (self.start_x == x and self.start_y == y):
+            self._change_moved()
         self.start_x = x
         self.start_y = y
         surface.blit(pygame.transform.scale(self.img, (size, size)), (x * size, y * size))

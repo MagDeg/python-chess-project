@@ -6,7 +6,7 @@ class BaseFigure:
         self.color = _color
         self.start_x = start_x
         self.start_y = start_y
-        self.moved = None
+        self.moved = False
         self.img = None
 
     def draw(self, x, y, surface, size):

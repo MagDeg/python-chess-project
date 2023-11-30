@@ -46,13 +46,13 @@ class Chessboard:
             if field.get_figure() is None:
                 return
             self.field_selected = field
-            #field.set_hover_color()
-            #field.draw(self.surface)
+            field.set_hover_color()
+            field.draw(self.surface)
             return
         if self.field_selected == field:
             self.field_selected = None
-            #field.remove_hover_color()
-            #field.draw(self.surface)
+            field.remove_hover_color()
+            field.draw(self.surface)
             return
 
         figure_selected = self.field_selected.get_figure()
@@ -72,6 +72,6 @@ class Chessboard:
 
         field.set_figure(figure_selected)
         self.field_selected.set_figure(None)
-        #self.field_selected.remove_hover_color()
+        self.field_selected.remove_hover_color()
         self.field_selected = None
         self.draw(self.surface)
