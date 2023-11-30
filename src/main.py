@@ -13,11 +13,22 @@ surface = pygame.display.set_mode((screen_size.surface_size, screen_size.surface
 
 color = Color()
 
+
+def temporary_setting_figures_method(fields):
+    # black figures
+    for i in range(0, 8):
+        fields[i][1].set_figure(Pawn(color.WHITE, i, 1))
+
+    # white figures
+    for i in range(0, 8):
+        fields[i][6].set_figure(Pawn(color.BLACK, i, 6))
+
 # initialising
 pygame.init()
 chessboard = Chessboard(surface)
+temporary_setting_figures_method(chessboard.fields)
+chessboard.fields[0][1].set_figure(Pawn(color.WHITE, 0, 0))
 chessboard.draw(surface)
-chessboard.fields[0][0].set_figure(Pawn(color.WHITE, 0, 0))
 
 
 def tempoaray_moving_method(x_pos_actual, y_pos_actual, x_pos_new, y_pos_new):

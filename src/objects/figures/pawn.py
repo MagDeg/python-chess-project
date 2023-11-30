@@ -6,8 +6,11 @@ from functions.color import Color
 class Pawn(BaseFigure):
     def __init__(self, _color, start_x, start_y):
         super().__init__(_color, start_x, start_y)
-        self.img = pygame.image.load("E:/PyDev/python-chess-project/src/images/white_pawn.png").convert()
-
+        color = Color()
+        if _color == color.WHITE:
+            self.img = pygame.image.load("E:/PyDev/python-chess-project/src/images/white_pawn.png").convert_alpha()
+        else:
+            self.img = pygame.image.load("E:/PyDev/python-chess-project/src/images/black_pawn.png").convert_alpha()
     def check_movement_allowance(self, field):
 
         x = field.x
@@ -34,14 +37,14 @@ class Pawn(BaseFigure):
                 return True
         return False
 
-    def draw(self, x, y, surface, size):
-
+    def _change_moved(self):
         if not self.moved:
-            # not on starting position
             self.moved = True
+
+    def draw(self, x, y, surface, size):
+        self._change_moved()
         print("drawn")
         self.start_x = x
         self.start_y = y
-        # implement draw method
         surface.blit(pygame.transform.scale(self.img, (size, size)), (x*size, y*size))
         pygame.display.flip()
