@@ -5,7 +5,7 @@ from objects.figures.pawn import Pawn
 from objects.figures.queen import Queen
 from objects.figures.rook import Rook
 from objects.singlefield import SingleField
-
+from functions.color import Color
 
 class Chessboard:
     def __init__(self, surface):
