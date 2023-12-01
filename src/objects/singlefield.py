@@ -14,25 +14,22 @@ class SingleField:
         self.figure = None
         self.color = None
 
-        color = Color()
         if (self.x + self.y) % 2 == 0:
-            self.color = color.FIELD_BLACK
+            self.color = Color.FIELD_BLACK
         else:
-            self.color = color.FIELD_WHITE
+            self.color = Color.FIELD_WHITE
 
     def set_hover_color(self):
-        color = Color()
-        if self.color == color.FIELD_WHITE:
-            self.color = color.FIELD_SELECTED_WHITE
+        if self.color == Color.FIELD_WHITE:
+            self.color = Color.FIELD_SELECTED_WHITE
         else:
-            self.color = color.FIELD_SELECTED_BLACK
+            self.color = Color.FIELD_SELECTED_BLACK
 
     def remove_hover_color(self):
-        color = Color()
-        if self.color == color.FIELD_SELECTED_WHITE:
-            self.color = color.FIELD_WHITE
+        if self.color == Color.FIELD_SELECTED_WHITE:
+            self.color = Color.FIELD_WHITE
         else:
-            self.color = color.FIELD_BLACK
+            self.color = Color.FIELD_BLACK
 
     def set_figure(self, figure):
         self.figure = figure

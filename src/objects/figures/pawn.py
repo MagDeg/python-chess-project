@@ -5,10 +5,9 @@ from functions.color import Color
 
 class Pawn(BaseFigure):
 
-    def __init__(self, _color, start_x, start_y):
-        super().__init__(_color, start_x, start_y)
-        color = Color()
-        if _color == color.WHITE:
+    def __init__(self, color, start_x, start_y):
+        super().__init__(color, start_x, start_y)
+        if color == Color.WHITE:
             self.img = pygame.image.load("images/white_pawn.png").convert_alpha()
         else:
             self.img = pygame.image.load("images/black_pawn.png").convert_alpha()
@@ -18,23 +17,19 @@ class Pawn(BaseFigure):
         x = field.x
         y = field.y
 
-        _delta_x = (self.start_x - x)
-        _delta_y = (self.start_y - y)
+        delta_x = (self.start_x - x)
+        delta_y = (self.start_y - y)
 
-        color = Color()
-
-        print(_delta_x, _delta_y)
-        print(self.moved)
-        if (self.moved is False or self.moved is None) and (_delta_x == 0):
-            if (self.color == color.BLACK and (_delta_y == 1 or _delta_y == 2)) or (
-                    self.color == color.WHITE and (_delta_y == -1 or _delta_y == -2)):
+        if (self.moved is False or self.moved is None) and (delta_x == 0):
+            if (self.color == Color.BLACK and (delta_y == 1 or delta_y == 2)) or (
+                    self.color == Color.WHITE and (delta_y == -1 or delta_y == -2)):
                 print("true")
                 return True
         else:
-            if (self.color == color.BLACK) and (_delta_y == 1) and (_delta_x == 0):
+            if (self.color == Color.BLACK) and (delta_y == 1) and (delta_x == 0):
                 print("true")
                 return True
-            if (self.color == color.WHITE) and (_delta_y == -1) and (_delta_x == 0):
+            if (self.color == Color.WHITE) and (delta_y == -1) and (delta_x == 0):
                 print("true")
                 return True
         print("false")

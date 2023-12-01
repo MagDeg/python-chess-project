@@ -18,5 +18,4 @@ class ScreenSize:
             return self.surface_size
 
     def get_single_field_size(self):
-        print(self.surface_size)
         return self.surface_size/8
