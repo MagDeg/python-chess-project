@@ -7,12 +7,15 @@ from objects.figures.rook import Rook
 from objects.singlefield import SingleField
 from functions.color import Color
 
+
 class Chessboard:
     def __init__(self, surface):
         self.surface = surface
         self.field_selected = None
 
+        self.killed_figures = []
         self.fields = []
+
         for x in range(0, 8):
             column = []
             for y in range(0, 8):
@@ -76,13 +79,17 @@ class Chessboard:
         if figure_target is not None:
             # enemy on field
             # TODO: implement enemy kill
-            pass
+            self.killed_figures.append(field.get_figure())
 
         field.set_figure(figure_selected)
         self.field_selected.set_figure(None)
         self.field_selected.remove_hover_color()
         self.field_selected = None
         self.draw(self.surface)
+
+        if len(self.killed_figures) != 0:
+            for i in self.killed_figures:
+                print(i.id)
 
     def place_figure(self):
         # black figures

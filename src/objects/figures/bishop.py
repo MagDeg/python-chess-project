@@ -6,7 +6,7 @@ from functions.color import Color
 class Bishop(BaseFigure):
     def __init__(self, color, start_x, start_y):
         super().__init__(color, start_x, start_y)
-
+        self.id = "Bishop"
         if color == Color.WHITE:
             self.img = pygame.image.load("images/white_bishop.png").convert_alpha()
         else:

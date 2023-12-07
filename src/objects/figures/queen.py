@@ -6,6 +6,7 @@ from functions.color import Color
 class Queen(BaseFigure):
     def __init__(self, color, start_x, start_y):
         super().__init__(color, start_x, start_y)
+        self.id = "Queen"
         if color == Color.WHITE:
             self.img = pygame.image.load("images/white_queen.png").convert_alpha()
         else:

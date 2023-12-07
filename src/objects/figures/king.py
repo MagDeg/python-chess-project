@@ -6,6 +6,7 @@ import pygame
 class King(BaseFigure):
     def __init__(self, color, start_x, start_y):
         super().__init__(color, start_x, start_y)
+        self.id = "King"
         if color == Color.WHITE:
             self.img = pygame.image.load("images/white_king.png").convert_alpha()
         else:

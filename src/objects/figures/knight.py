@@ -7,6 +7,7 @@ from functions.color import Color
 class Knight(BaseFigure):
     def __init__(self, color, start_x, start_y):
         super().__init__(color, start_x, start_y)
+        self.id = "Knight"
         if color == Color.WHITE:
             self.img = pygame.image.load("images/white_knight.png").convert_alpha()
         else:
