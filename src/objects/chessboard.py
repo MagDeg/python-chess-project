@@ -81,15 +81,25 @@ class Chessboard:
             # TODO: implement enemy kill
             self.killed_figures.append(field.get_figure())
 
+            count_white_figures = 0
+            count_black_figures = 0
+
+            for i in self.killed_figures:
+                if i.color == Color.WHITE:
+                    i.draw_killed(self.surface, count_white_figures)
+                    count_white_figures += 1
+                else:
+                    i.draw_killed(self.surface, count_black_figures)
+                    count_black_figures += 1
+
+
         field.set_figure(figure_selected)
         self.field_selected.set_figure(None)
         self.field_selected.remove_hover_color()
         self.field_selected = None
         self.draw(self.surface)
 
-        if len(self.killed_figures) != 0:
-            for i in self.killed_figures:
-                print(i.id)
+
 
     def place_figure(self):
         # black figures
@@ -137,3 +147,10 @@ class Chessboard:
 
         # king
         self.fields[4][7].set_figure(King(Color.BLACK, 4, 7))
+
+    def is_king_dead(self):
+        for i in self.killed_figures:
+            if type(i) is King:
+                print("King is dead")
+                return True
+

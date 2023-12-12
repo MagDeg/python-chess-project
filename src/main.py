@@ -27,6 +27,11 @@ while running:
     # reloads display every time loop is called
     pygame.display.update()
 
+    if chessboard.is_king_dead():
+        # running = False
+        #TODO: IMPLEMENT VICTORY SCREEN
+        pass
+
     # searching all running events
     for event in pygame.event.get():
         # if mouse pressed event recognised (mouse button click)

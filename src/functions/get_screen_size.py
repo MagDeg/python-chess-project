@@ -4,7 +4,6 @@ from win32api import GetSystemMetrics
 class ScreenSize:
     def __init__(self):
         self.surface_size = self.get_surface_size()
-        pass
 
     def get_surface_size(self):
         height = GetSystemMetrics(1)
