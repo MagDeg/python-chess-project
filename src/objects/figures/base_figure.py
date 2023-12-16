@@ -27,7 +27,7 @@ class BaseFigure:
         x_length_start = screen.get_surface_size()
 
         single_field_length = int((y_length / 2) / 4)
-        single_field_width = 100 / 4
+        single_field_width = 100 / 1.5
 
         if self.color == Color.WHITE:
             surface.blit(pygame.transform.scale(self.img, (single_field_width, single_field_width)),

@@ -73,7 +73,7 @@ class Chessboard:
             return
 
         # check if figure is allowed to move there
-        if not figure_selected.check_movement_allowance(field):
+        if not figure_selected.check_movement_allowance(field, self.fields):
             return
 
         if figure_target is not None:
