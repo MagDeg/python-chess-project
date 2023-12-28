@@ -12,7 +12,7 @@ class Knight(BaseFigure):
         else:
             self.img = pygame.image.load("images/black_knight.png").convert_alpha()
 
-    def check_movement_allowance(self, field):
+    def check_movement_allowance(self, field, fields):
         x = field.x
         y = field.y
 

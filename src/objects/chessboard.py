@@ -13,6 +13,8 @@ class Chessboard:
         self.surface = surface
         self.field_selected = None
 
+        self.previous_side_color = Color.BLACK
+
         self.killed_figures = []
         self.fields = []
 
@@ -56,14 +58,25 @@ class Chessboard:
         if self.field_selected is None:
             if field.get_figure() is None:
                 return
+
+            if self.previous_side_color is field.figure.color:
+                return
+            else:
+                self.previous_side_color = field.figure.color
+
             self.field_selected = field
             field.set_hover_color()
             field.draw(self.surface)
             return
+
         if self.field_selected == field:
             self.field_selected = None
             field.remove_hover_color()
             field.draw(self.surface)
+            if field.figure.color == Color.WHITE:
+                self.previous_side_color = Color.BLACK
+            else:
+                self.previous_side_color = Color.WHITE
             return
 
         figure_selected = self.field_selected.get_figure()
@@ -78,7 +91,6 @@ class Chessboard:
 
         if figure_target is not None:
             # enemy on field
-            # TODO: implement enemy kill
             self.killed_figures.append(field.get_figure())
 
             count_white_figures = 0
@@ -92,14 +104,11 @@ class Chessboard:
                     i.draw_killed(self.surface, count_black_figures)
                     count_black_figures += 1
 
-
         field.set_figure(figure_selected)
         self.field_selected.set_figure(None)
         self.field_selected.remove_hover_color()
         self.field_selected = None
         self.draw(self.surface)
-
-
 
     def place_figure(self):
         # black figures
@@ -151,6 +160,5 @@ class Chessboard:
     def is_king_dead(self):
         for i in self.killed_figures:
             if type(i) is King:
-                print("King is dead")
                 return True
 
