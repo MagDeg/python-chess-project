@@ -25,10 +25,10 @@ class Chessboard:
 
             self.fields.append(column)
 
-    def draw(self, surface):
+    def draw(self):
         for column in self.fields:
             for row in column:
-                row.draw(surface)
+                row.draw(self.surface)
 
     def check_mouse_position(self, _mouse_pos):
         for x in self.fields:
@@ -108,7 +108,7 @@ class Chessboard:
         self.field_selected.set_figure(None)
         self.field_selected.remove_hover_color()
         self.field_selected = None
-        self.draw(self.surface)
+        self.draw()
 
     def place_figure(self):
         # black figures
@@ -160,5 +160,6 @@ class Chessboard:
     def is_king_dead(self):
         for i in self.killed_figures:
             if type(i) is King:
-                return True
+                return i
+        return None
 
