@@ -14,7 +14,6 @@ class WinScreen:
             self.black_winner(surface)
         self.active = True
 
-
     def black_winner(self, surface):
         screensize = ScreenSize()
         black_win_screen = pygame.image.load('images/winning_screen_black.png')

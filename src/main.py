@@ -1,5 +1,3 @@
-import time
-
 import pygame
 from functions.get_screen_size import ScreenSize
 from objects.chessboard import Chessboard

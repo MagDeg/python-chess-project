@@ -1,11 +1,5 @@
-import time
-
 import pygame
 from functions.get_screen_size import *
-from objects.chessboard import Chessboard
-
-
-from pygame.locals import*
 
 
 class Menu:
