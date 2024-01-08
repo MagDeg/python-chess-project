@@ -1,12 +1,13 @@
 import pygame
-
 from objects.figures.base_figure import BaseFigure
 from functions.color import Color
 
 
 class Knight(BaseFigure):
     def __init__(self, color, start_x, start_y):
+        # calling ParentClass's init method
         super().__init__(color, start_x, start_y)
+        # loading image depending on color of figure
         if color == Color.WHITE:
             self.img = pygame.image.load("images/white_knight.png").convert_alpha()
         else:
