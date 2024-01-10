@@ -48,6 +48,6 @@ class SingleField:
         y1 = self.y * self.h
 
         pygame_local = PygameLocal(surface)
-        pygame_local.drawRect(self.color, x1, y1, self.w, self.h)
+        pygame_local.draw_rect(self.color, x1, y1, self.w, self.h)
 
         self._draw_figure(self.x, self.y, surface)

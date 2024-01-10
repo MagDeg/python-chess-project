@@ -2,8 +2,8 @@ import pygame
 from functions.get_screen_size import ScreenSize
 from objects.chessboard import Chessboard
 from objects.credit_screen import CreditScreen
-from objects.winscreen import WinScreen
-from objects.menu import Menu
+from objects.win_screen import WinScreen
+from objects.menu_screen import MenuScreen
 
 
 def main():
@@ -28,8 +28,9 @@ def main():
     credit_screen = CreditScreen(surface)
 
     # initialising menu class for startup display
-    menu = Menu(surface, chessboard, credit_screen)
+    menu = MenuScreen(surface, chessboard, credit_screen)
 
+    # showing menu screen
     menu.draw()
 
     # prevents display from closing if code finished
@@ -38,6 +39,7 @@ def main():
         # reloads display every time loop is called
         pygame.display.update()
 
+        # checks if one king has been killed and calling the win_screen
         if chessboard.is_king_dead() is not None:
             win_screen.draw(chessboard.is_king_dead().color, surface)
 
@@ -49,12 +51,16 @@ def main():
                 # pass mouse position to chessboard class to evaluate position
                 chessboard.on_select(pygame.mouse.get_pos())
 
+                # restart program if mouse is clicked and a player won
                 if win_screen.active is True:
                     main()
 
+                # restart program if mouse is clicked and credit_screen is shown
                 if credit_screen.active is True:
                     main()
 
+                # if the button is clicked and the menu_screen is active pass mouse position to menu class for
+                # evaluation
                 if menu.active is True:
                     menu.mouse_clicked(pygame.mouse.get_pos())
 

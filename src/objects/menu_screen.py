@@ -2,7 +2,7 @@ import pygame
 from functions.get_screen_size import *
 
 
-class Menu:
+class MenuScreen:
     def __init__(self, surface, chessboard, credit_screen):
         self.screensize = ScreenSize()
         self.surface = surface

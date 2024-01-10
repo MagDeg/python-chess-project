@@ -10,20 +10,14 @@ class Pawn(BaseFigure):
         super().__init__(color, start_x, start_y)
         # loading image depending on color of figure
         if color == Color.WHITE:
+            # loading image for figure with transparent background
             self.img = pygame.image.load("images/white_pawn.png").convert_alpha()
         else:
             self.img = pygame.image.load("images/black_pawn.png").convert_alpha()
 
-    def check_field_for_enemy(self, field):
-        # checking if there is an enemy on the targeted field
-        if field.figure is None:
-            return False
-        if field.figure.color == self.color:
-            return False
-
-        return True
-
     def check_movement_allowance(self, field, fields):
+        # returns true if move is valid and false if it is not
+
         # defining target field variables
         x = field.x
         y = field.y
