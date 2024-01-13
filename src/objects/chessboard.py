@@ -6,6 +6,7 @@ from objects.figures.queen import Queen
 from objects.figures.rook import Rook
 from objects.singlefield import SingleField
 from functions.color import Color
+import random
 
 
 class Chessboard:
@@ -24,6 +25,9 @@ class Chessboard:
 
         # list to store every field on the chessboard
         self.fields = []
+
+        # count of all figures that had been added after the game had started
+        self.count_of_later_added_figures = 0
 
         # filling the list with the "raw" fields
         # adding for every x-box a list with all the y-boxes of this column
@@ -159,6 +163,44 @@ class Chessboard:
         self.field_selected.set_figure(None)
         # removing hover_color
         self.field_selected.remove_hover_color()
+
+        # if the figure is a pawn, it has a special feature
+        # if it is on the other side of the field it changes to another figure like a queen
+        # in our case the figure can't be chosen by the player, instead it will be a random figure that was
+        # already killed (except for another pawn)
+        if type(figure_selected) is Pawn:
+            # defining list for all figures with the same color as the selected pawn
+            killed_same_color = []
+            # getting the color of the selected pawn
+            color_selected = figure_selected.color
+            # if the pawn has reached the other end of the board
+            # in this case there is no need to differentiate between white and black, because the different figure
+            # in each case can not reach a position behind itself (so the black pawn can not reach position 7,
+            # because it spawned on 6 and can only move towards y negative
+            if field.y == 7 or field.y == 0:
+                # going through every entry in list of killed figures
+                for i in self.killed_figures:
+                    # if there is a king found the game ends
+                    if type(i) is King:
+                        return
+                    # put every entry that is not a pawn and has the same color as the selected pawn into the list
+                    if i.color == color_selected and type(i) is not Pawn:
+                        killed_same_color.append(i)
+
+                # if the list is not empty (meaning there were other figures killed than pawns)
+                if len(killed_same_color) != 0:
+                    # select a random figure from the list
+                    figure = random.choice(killed_same_color)
+                    # remove it from the list of killed figures (so it is "revived")
+                    self.killed_figures.remove(figure)
+                else:
+                    # if there is no entry the new figure is always a queen (so it is a new object in the game)
+                    figure = Queen(color_selected, field.x, field.y)
+                    self.count_of_later_added_figures += self.count_of_later_added_figures
+
+                # setting new figure on the field
+                field.set_figure(figure)
+
         # clearing the previous selected field
         self.field_selected = None
         # updating whole chessboard by redrawing
@@ -213,12 +255,19 @@ class Chessboard:
         # king
         self.fields[4][7].set_figure(King(Color.BLACK, 4, 7))
 
-    def is_king_dead(self):
-        # function to check if there is a king in list of killed figures
+    def has_game_ended(self):
+        # function to check if the game has ended, meaning either one of the kings was killed
+        # or all figures but the kings were killed
+
+        # getting count of all killed figures
+        count_of_killed_figures = len(self.killed_figures)
 
         # if there is an item of type King return it, either return None
         for i in self.killed_figures:
             if type(i) is King:
                 return i
-        return None
-
+        # the game has originally 30 figures without the two kings, so the count of later added figures are added
+        # to this number to determine if there are only two kings left, which means the game is a draw
+        if count_of_killed_figures == 30 + self.count_of_later_added_figures:
+            return True
+        return False

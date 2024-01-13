@@ -40,8 +40,8 @@ def main():
         pygame.display.update()
 
         # checks if one king has been killed and calling the win_screen
-        if chessboard.is_king_dead() is not None:
-            win_screen.draw(chessboard.is_king_dead().color, surface)
+        if chessboard.has_game_ended() is not False:
+            win_screen.draw(chessboard.has_game_ended(), surface)
 
         # searching all running events
         for event in pygame.event.get():
