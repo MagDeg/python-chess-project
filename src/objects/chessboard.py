@@ -139,6 +139,31 @@ class Chessboard:
         if not figure_selected.check_movement_allowance(field, self.fields):
             return
 
+        # this message can only be returned by a king, which means that the castling has to happen
+        if figure_selected.check_movement_allowance(field, self.fields) == "castling":
+            # setting selected figure to the target field, because conditions were checked in king class
+            field.set_figure(figure_selected)
+            # getting position of the rook, which changes depending on the side of the king
+            # can be got by comparing target-x and selected-x
+            if self.field_selected.x > field.x:
+                # if the rook is on the left side of the king it is a field more away,
+                # because of the position of the queen
+                field_next_to_target = self.fields[field.x - 2][field.y]
+                # placing rook to a field before the king
+                self.fields[self.field_selected.x - 1][self.field_selected.y].set_figure(
+                    field_next_to_target.get_figure())
+                # removing figure form original field
+                field_next_to_target.set_figure(None)
+            else:
+                # if the rook is on the left side of the king it is a field more away,
+                # because of the position of the queen
+                field_next_to_target = self.fields[field.x + 1][field.y]
+                # placing rook to a field before the king
+                self.fields[self.field_selected.x + 1][self.field_selected.y].set_figure(
+                    field_next_to_target.get_figure())
+                # removing figure form original field
+                field_next_to_target.set_figure(None)
+
         # if there is a figure on the target
         if figure_target is not None:
             # putting figure of target field to killed figures

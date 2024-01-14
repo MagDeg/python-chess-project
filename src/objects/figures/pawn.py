@@ -68,7 +68,7 @@ class Pawn(BaseFigure):
             return
 
     def draw(self, x, y, surface, size):
-        # funtion to draw the figure on the field
+        # function to draw the figure on the field
         # if figure is moved the first, the variable moved will be refreshed to true
         if not (self.start_x == x and self.start_y == y):
             self._change_moved()
