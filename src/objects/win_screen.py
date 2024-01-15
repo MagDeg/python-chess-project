@@ -17,9 +17,8 @@ class WinScreen:
             if end_object == Color.WHITE:
                 self.black_winner(surface)
         else:
-            # is is a draw, no king was killed
-            # TODO: IMPLEMENT END_SCREEN FOR A DRAW
-            pass
+            # it is a draw, no king was killed
+            self.draw_screen(surface)
         self.active = True
 
     def black_winner(self, surface):
@@ -31,5 +30,11 @@ class WinScreen:
     def white_winner(self, surface):
         screensize = ScreenSize()
         white_win_screen = pygame.image.load('images/winning_screen_white.png')
+        full_white_win_screen = pygame.transform.scale(white_win_screen, (screensize.get_surface_size(), screensize.get_surface_size()))
+        surface.blit(full_white_win_screen, (0, 0))
+
+    def draw_screen(self, surface):
+        screensize = ScreenSize()
+        white_win_screen = pygame.image.load('images/draw_screen.png')
         full_white_win_screen = pygame.transform.scale(white_win_screen, (screensize.get_surface_size(), screensize.get_surface_size()))
         surface.blit(full_white_win_screen, (0, 0))

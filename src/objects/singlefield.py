@@ -1,4 +1,4 @@
-from functions.draw import PygameLocal
+from functions.draw import PygameUtils
 from functions.get_screen_size import ScreenSize
 from functions.color import Color
 
@@ -9,7 +9,7 @@ class SingleField:
 
         self.x = _x
         self.y = _y
-        self.w = int(screen_size.get_single_field_size())
+        self.w = screen_size.get_single_field_size()
         self.h = self.w
         self.figure = None
         self.color = None
@@ -47,7 +47,6 @@ class SingleField:
         x1 = self.x * self.w
         y1 = self.y * self.h
 
-        pygame_local = PygameLocal(surface)
-        pygame_local.draw_rect(self.color, x1, y1, self.w, self.h)
+        PygameUtils.draw_rect(self.color, x1, y1, self.w, self.h, surface)
 
         self._draw_figure(self.x, self.y, surface)

@@ -46,22 +46,22 @@ class Chessboard:
         # function to draw the raw chessboard
 
         # goes in every field class instance and calls the draw event by passing the surface to draw upon
-        for column in self.fields:
-            for row in column:
-                row.draw(self.surface)
+        for row in self.fields:
+            for field in row:
+                field.draw(self.surface)
 
     def check_mouse_position(self, _mouse_pos):
         # function to evaluate the position of the mouse on the field
         # turning real coordinates into field-coordinates
 
         # checks every field on the chessboard
-        for x in self.fields:
-            for y in x:
+        for row in self.fields:
+            for field in row:
                 # getting range of real coordinates of field by multiplying field coordinates with width of Singelfield
-                x_start = y.x * y.w
-                y_start = y.y * y.h
-                x_end = x_start + y.w
-                y_end = y_start + y.h
+                x_start = field.x * field.w
+                y_start = field.y * field.h
+                x_end = x_start + field.w
+                y_end = y_start + field.h
 
                 # extracting single mouse coordinates
                 mouse_x = _mouse_pos[0]
@@ -71,7 +71,7 @@ class Chessboard:
                 # if true, returning the field coordinates
                 if x_start <= mouse_x <= x_end:
                     if y_start <= mouse_y <= y_end:
-                        return y.x, y.y
+                        return field.x, field.y
 
         # if no field matches, click is outside the board and it returns the first coordinates
         return 0, 0
@@ -86,41 +86,41 @@ class Chessboard:
         # calculating field-coordinate of real coordinate
         field_cord = self.check_mouse_position(mouse_pos)
         # getting the selected field from the rest of the fields
-        field = self.fields[field_cord[0]][field_cord[1]]
+        target_field = self.fields[field_cord[0]][field_cord[1]]
 
         # if there is no previously selected field
         if self.field_selected is None:
             # if there is no figure on that field return, because in order to make a move you have to select a figure
-            if field.get_figure() is None:
+            if target_field.get_figure() is None:
                 return
 
             # if you already have made a move, return -> you can not make two moves on after the other
-            if self.previous_side_color is field.figure.color:
+            if self.previous_side_color is target_field.figure.color:
                 return
-            else:
-                # if not you make a move, so you can make the next
-                self.previous_side_color = field.figure.color
+
+            # if you do not make a move, so you can make the next
+            self.previous_side_color = target_field.figure.color
 
             # selecting the field with the figure on it
-            self.field_selected = field
+            self.field_selected = target_field
             # setting color of that field to hover_color to raise it from the other
-            field.set_hover_color()
+            target_field.set_hover_color()
             # after that the field has to redrawn to update the appearance
-            field.draw(self.surface)
+            target_field.draw(self.surface)
             # end of function
             return
 
         # if the same field was selected as previous it is handled as a "cancel-event"
-        if self.field_selected == field:
+        if self.field_selected == target_field:
             # resetting selected field
             self.field_selected = None
             # removing hover_color
-            field.remove_hover_color()
+            target_field.remove_hover_color()
             # redrawing to update the appearance
-            field.draw(self.surface)
+            target_field.draw(self.surface)
 
             # depending on the clicked figure, update previous color, to make sure to allow the player a valid move
-            if field.figure.color == Color.WHITE:
+            if target_field.figure.color == Color.WHITE:
                 self.previous_side_color = Color.BLACK
             else:
                 self.previous_side_color = Color.WHITE
@@ -129,26 +129,26 @@ class Chessboard:
         # if a new field was selected, getting figure from previous selected field
         figure_selected = self.field_selected.get_figure()
         # getting figure from target field
-        figure_target = field.get_figure()
+        figure_target = target_field.get_figure()
 
         # if there is a figure from the same color on that field return because it is not a valid move
         if figure_target is not None and figure_target.color == figure_selected.color:
             return
 
         # check if figure is allowed to move there
-        if not figure_selected.check_movement_allowance(field, self.fields):
+        if not figure_selected.check_movement_allowance(target_field, self.fields):
             return
 
         # this message can only be returned by a king, which means that the castling has to happen
-        if figure_selected.check_movement_allowance(field, self.fields) == "castling":
+        if figure_selected.check_movement_allowance(target_field, self.fields) == "castling":
             # setting selected figure to the target field, because conditions were checked in king class
-            field.set_figure(figure_selected)
+            target_field.set_figure(figure_selected)
             # getting position of the rook, which changes depending on the side of the king
             # can be got by comparing target-x and selected-x
-            if self.field_selected.x > field.x:
+            if self.field_selected.x > target_field.x:
                 # if the rook is on the left side of the king it is a field more away,
                 # because of the position of the queen
-                field_next_to_target = self.fields[field.x - 2][field.y]
+                field_next_to_target = self.fields[target_field.x - 2][target_field.y]
                 # placing rook to a field before the king
                 self.fields[self.field_selected.x - 1][self.field_selected.y].set_figure(
                     field_next_to_target.get_figure())
@@ -157,7 +157,7 @@ class Chessboard:
             else:
                 # if the rook is on the left side of the king it is a field more away,
                 # because of the position of the queen
-                field_next_to_target = self.fields[field.x + 1][field.y]
+                field_next_to_target = self.fields[target_field.x + 1][target_field.y]
                 # placing rook to a field before the king
                 self.fields[self.field_selected.x + 1][self.field_selected.y].set_figure(
                     field_next_to_target.get_figure())
@@ -167,7 +167,7 @@ class Chessboard:
         # if there is a figure on the target
         if figure_target is not None:
             # putting figure of target field to killed figures
-            self.killed_figures.append(field.get_figure())
+            self.killed_figures.append(target_field.get_figure())
 
             # adding counter for figures of each color
             count_white_figures = 0
@@ -183,7 +183,7 @@ class Chessboard:
                     count_black_figures += 1
 
         # moving figure to target field
-        field.set_figure(figure_selected)
+        target_field.set_figure(figure_selected)
         # removing figure from previous field
         self.field_selected.set_figure(None)
         # removing hover_color
@@ -202,7 +202,7 @@ class Chessboard:
             # in this case there is no need to differentiate between white and black, because the different figure
             # in each case can not reach a position behind itself (so the black pawn can not reach position 7,
             # because it spawned on 6 and can only move towards y negative
-            if field.y == 7 or field.y == 0:
+            if target_field.y == 7 or target_field.y == 0:
                 # going through every entry in list of killed figures
                 for i in self.killed_figures:
                     # if there is a king found the game ends
@@ -220,65 +220,66 @@ class Chessboard:
                     self.killed_figures.remove(figure)
                 else:
                     # if there is no entry the new figure is always a queen (so it is a new object in the game)
-                    figure = Queen(color_selected, field.x, field.y)
+                    figure = Queen(color_selected, target_field.x, target_field.y)
                     self.count_of_later_added_figures += self.count_of_later_added_figures
 
                 # setting new figure on the field
-                field.set_figure(figure)
+                target_field.set_figure(figure)
 
         # clearing the previous selected field
         self.field_selected = None
         # updating whole chessboard by redrawing
         self.draw()
 
-    def place_figure(self):
+    def place_figures(self):
         # place every figure on start position
 
-        # black figures
-        # pawns
-        for i in range(0, 8):
-            self.fields[i][1].set_figure(Pawn(Color.WHITE, i, 1))
+        # defining map with the figure types
+        figure_types = {
+            "P": Pawn,
+            "R": Rook,
+            "B": Bishop,
+            "N": Knight,
+            "K": King,
+            "Q": Queen,
+        }
 
-        # rooks
-        self.fields[0][0].set_figure(Rook(Color.WHITE, 0, 0))
-        self.fields[7][0].set_figure(Rook(Color.WHITE, 7, 0))
+        # modelling chessboard in a 2 dimensional list
+        figures = [
+            ["wR", "wB", "wN", "wQ", "wK", "wN", "wB", "wR"],
+            ["wP", "wP", "wP", "wP", "wP", "wP", "wP", "wP"],
+            [],
+            [],
+            [],
+            [],
+            ["bP", "bP", "bP", "bP", "bP", "bP", "bP", "bP"],
+            ["bR", "bB", "bN", "bQ", "bK", "bN", "bB", "bR"],
+        ]
 
-        # bishops
-        self.fields[2][0].set_figure(Bishop(Color.WHITE, 2, 0))
-        self.fields[5][0].set_figure(Bishop(Color.WHITE, 5, 0))
+        y = 0
+        for row in figures:
+            # x coordinate has to be reset after every row
+            x = 0
+            for figure in row:
+                # setting color to white
+                color = Color.WHITE
 
-        # knights
-        self.fields[1][0].set_figure(Knight(Color.WHITE, 1, 0))
-        self.fields[6][0].set_figure(Knight(Color.WHITE, 6, 0))
+                # if the string of the figure has a "b" at the first position, it means the figure has to be black
+                if figure[0] == "b":
+                    # color set to black
+                    color = Color.BLACK
 
-        # queen
-        self.fields[3][0].set_figure(Queen(Color.WHITE, 3, 0))
+                # getting figure type with the second character of the string and the predefined map
+                figure_type = figure_types[figure[1]]
 
-        # king
-        self.fields[4][0].set_figure(King(Color.WHITE, 4, 0))
-
-        # white figures
-        # pawns
-        for i in range(0, 8):
-            self.fields[i][6].set_figure(Pawn(Color.BLACK, i, 6))
-
-        # rooks
-        self.fields[0][7].set_figure(Rook(Color.BLACK, 0, 7))
-        self.fields[7][7].set_figure(Rook(Color.BLACK, 7, 7))
-
-        # bishops
-        self.fields[2][7].set_figure(Bishop(Color.BLACK, 2, 7))
-        self.fields[5][7].set_figure(Bishop(Color.BLACK, 5, 7))
-
-        # knights
-        self.fields[1][7].set_figure(Knight(Color.BLACK, 1, 7))
-        self.fields[6][7].set_figure(Knight(Color.BLACK, 6, 7))
-
-        # queen
-        self.fields[3][7].set_figure(Queen(Color.BLACK, 3, 7))
-
-        # king
-        self.fields[4][7].set_figure(King(Color.BLACK, 4, 7))
+                # if there is a figure type
+                if figure_type is not None:
+                    # placing figure to field
+                    self.fields[x][y].set_figure(figure_type(color, x, y))
+                # moving position one field ahead
+                x += 1
+            # moving position one field ahead
+            y += 1
 
     def has_game_ended(self):
         # function to check if the game has ended, meaning either one of the kings was killed

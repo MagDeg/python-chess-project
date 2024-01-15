@@ -4,19 +4,15 @@ from functions.color import Color
 
 
 class Queen(BaseFigure):
-    def __init__(self, color, start_x, start_y):
-        super().__init__(color, start_x, start_y)
-        if color == Color.WHITE:
-            self.img = pygame.image.load("images/white_queen.png").convert_alpha()
-        else:
-            self.img = pygame.image.load("images/black_queen.png").convert_alpha()
+    def __init__(self, color, x, y):
+        super().__init__(color, x, y)
 
     def check_movement_allowance(self, field, fields):
         x = field.x
         y = field.y
 
-        delta_x = abs(self.start_x - x)
-        delta_y = abs(self.start_y - y)
+        delta_x = abs(self.x - x)
+        delta_y = abs(self.y - y)
 
         if delta_x == delta_y != 0:
             if self.is_figure_on_line_diagonal(field, fields) is True:

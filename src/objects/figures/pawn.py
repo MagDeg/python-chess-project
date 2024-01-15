@@ -5,15 +5,9 @@ from functions.color import Color
 
 class Pawn(BaseFigure):
 
-    def __init__(self, color, start_x, start_y):
+    def __init__(self, color, x, y):
         # calling ParentClass's init method
-        super().__init__(color, start_x, start_y)
-        # loading image depending on color of figure
-        if color == Color.WHITE:
-            # loading image for figure with transparent background
-            self.img = pygame.image.load("images/white_pawn.png").convert_alpha()
-        else:
-            self.img = pygame.image.load("images/black_pawn.png").convert_alpha()
+        super().__init__(color, x, y)
 
     def check_movement_allowance(self, field, fields):
         # returns true if move is valid and false if it is not
@@ -23,8 +17,8 @@ class Pawn(BaseFigure):
         y = field.y
 
         # calculating the difference between target and current field
-        delta_x = (self.start_x - x)
-        delta_y = (self.start_y - y)
+        delta_x = (self.x - x)
+        delta_y = (self.y - y)
 
         # detecting if there is an enemy on the target field, because it changes the movement allowance
         # (only by the pawn)
@@ -70,11 +64,11 @@ class Pawn(BaseFigure):
     def draw(self, x, y, surface, size):
         # function to draw the figure on the field
         # if figure is moved the first, the variable moved will be refreshed to true
-        if not (self.start_x == x and self.start_y == y):
+        if not (self.x == x and self.y == y):
             self._change_moved()
-        # refreshing start coordinates, with the new position
-        self.start_x = x
-        self.start_y = y
+
+        self.refresh_current_position(x, y)
+
         # actual draw method, but first resize to the SingleFiled size
         surface.blit(pygame.transform.scale(self.img, (size, size)), (x * size, y * size))
 

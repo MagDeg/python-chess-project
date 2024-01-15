@@ -4,12 +4,8 @@ from functions.color import Color
 
 
 class Rook(BaseFigure):
-    def __init__(self, color, start_x, start_y):
-        super().__init__(color, start_x, start_y)
-        if color == Color.WHITE:
-            self.img = pygame.image.load("images/white_rook.png").convert_alpha()
-        else:
-            self.img = pygame.image.load("images/black_rook.png").convert_alpha()
+    def __init__(self, color, x, y):
+        super().__init__(color, x, y)
 
     def check_movement_allowance(self, field, fields):
 
@@ -19,8 +15,8 @@ class Rook(BaseFigure):
         if self.is_figure_on_line_straight(field, fields) is True:
             return False
 
-        _delta_x = abs(self.start_x - x)
-        _delta_y = abs(self.start_y - y)
+        _delta_x = abs(self.x - x)
+        _delta_y = abs(self.y - y)
 
         if (_delta_x == 0 and _delta_y != 0) or (_delta_x != 0 and _delta_y == 0):
             return True

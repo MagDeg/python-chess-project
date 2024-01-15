@@ -5,12 +5,8 @@ from objects.figures.rook import Rook
 
 
 class King(BaseFigure):
-    def __init__(self, color, start_x, start_y):
-        super().__init__(color, start_x, start_y)
-        if color == Color.WHITE:
-            self.img = pygame.image.load("images/white_king.png").convert_alpha()
-        else:
-            self.img = pygame.image.load("images/black_king.png").convert_alpha()
+    def __init__(self, color, x, y):
+        super().__init__(color, x, y)
 
     def _change_moved(self):
         # change moved variable from false to true
@@ -22,8 +18,8 @@ class King(BaseFigure):
         x = field.x
         y = field.y
 
-        delta_x = abs(self.start_x - x)
-        delta_y = abs(self.start_y - y)
+        delta_x = abs(self.x - x)
+        delta_y = abs(self.y - y)
 
         # if king has not been moved, it can make a castling
         if self.moved is False:
@@ -31,7 +27,7 @@ class King(BaseFigure):
             if delta_y == 0 and delta_x == 2:
                 # it has to be checked on which side the king moves by comparing target-x and selected-x to get
                 # the position of the rook
-                if self.start_x > x:
+                if self.x > x:
                     # if the rook is on the left side of the king it is a field more away,
                     # because of the position of the queen
                     field_next_to_target = fields[x-2][y]
@@ -53,10 +49,10 @@ class King(BaseFigure):
     def draw(self, x, y, surface, size):
         # function to draw the figure on the field
         # if figure is moved the first, the variable moved will be refreshed to true
-        if not (self.start_x == x and self.start_y == y):
+        if not (self.x == x and self.y == y):
             self._change_moved()
-        # refreshing start coordinates, with the new position
-        self.start_x = x
-        self.start_y = y
+
+        self.refresh_current_position(x, y)
+
         # actual draw method, but first resize to the SingleFiled size
         surface.blit(pygame.transform.scale(self.img, (size, size)), (x * size, y * size))

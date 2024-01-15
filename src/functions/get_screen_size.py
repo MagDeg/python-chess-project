@@ -13,16 +13,11 @@ class ScreenSize:
 
         # the chessboard is a square, to get the largest possible size, the smallest size has to be
         # considered to get the maximum length
-        if height >= width:
-            # multiplying the smallest size with factor to make the window a little bit smaller
-            self.surface_size = width * 0.90
-            return self.surface_size
-        else:
-            # multiplying the smallest size with factor to make the window a little bit smaller
-            self.surface_size = height * 0.90
-            return self.surface_size
+        # multiplying the smallest size with factor to make the window a little bit smaller
+        self.surface_size = min(height, width) * 0.90
+        return int(self.surface_size)
 
     def get_single_field_size(self):
         # a chessboard has 64 fields in a 8x8 grid, so the width is 1/8 of the total width
         # because it is a square the width is also the height, so it is enough to work with just one value
-        return self.surface_size/8
+        return int(self.surface_size/8)

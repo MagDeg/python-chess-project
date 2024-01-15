@@ -4,16 +4,33 @@ from functions.draw import *
 
 
 class BaseFigure:
-    def __init__(self, color, start_x, start_y):
+    def __init__(self, color, x, y):
         # color of figure, means black or white, ColorObject of class functions.color
         self.color = color
         # saving position, on which figure stands at the moment of selection
-        self.start_x = start_x
-        self.start_y = start_y
+        self.x = x
+        self.y = y
         # variable to check if figure has been moved -> essential in combination with pawn or king
         self.moved = False
-        # variable for image, which will be loaded in ChildClass
-        self.img = None
+
+        # getting correct image for every subclass
+        # getting type of subclass by using type and converting it to string;
+        # separating type at "." because type is composed and only the last word after the last "." matters for the type
+        # parsing type to lower case and getting all characters except the last two (because they special signs like "<"
+        # now we have the subclass-type as a string
+        type_figure = str(type(self)).split(".")[-1].lower()[:-2]
+        # getting image path
+        # double "\\" needed because if not, string detects a "breakout"
+        # everything in curly brackets are variables, that change with every subclass
+        # variables are replaced with .format function
+        img_path = "images\\{color}_{type}.png".format(color=self.color, type=type_figure)
+        # loading final image and converting it to have a transparent background
+        self.img = pygame.image.load(img_path).convert_alpha()
+
+    def refresh_current_position(self, new_x, new_y):
+        # refreshing current position of figure
+        self.x = new_x
+        self.y = new_y
 
     def draw(self, x, y, surface, size):
         # draw figure on defined surface
@@ -23,9 +40,7 @@ class BaseFigure:
 
         # will be overwritten in some figures for additional options
 
-        # refreshing current position of figure
-        self.start_x = x
-        self.start_y = y
+        self.refresh_current_position(x, y)
 
         # actual draw method
         # images needs to be resized on size of single field
@@ -34,12 +49,15 @@ class BaseFigure:
     def check_field_for_enemy(self, field):
         # detect if there is an enemy on the targeted field
 
-        # if there is a figure on field check if it is an enemy or not by checking if figure is same color as self
-        if field.figure is not None:
-            if field.figure.color == self.color:
-                return False
-            return True
-        return False
+        # if there is no figure on field, there is no enemy
+        if field.figure is None:
+            return False
+
+        # if there is a figure from the same color on field, there is no enemy
+        if field.figure.color == self.color:
+            return False
+
+        return True
 
     def draw_killed(self, surface, count_figures):
         # function to draw figure if it has been killed by the enemy, it will be shown on the right side of the field
@@ -91,35 +109,36 @@ class BaseFigure:
 
         # if target_x is bigger that start_x the destination is on the right side of the figure
         # fields will be searched from the smallest to the highest
-        if target_x > self.start_x:
-            start_x = self.start_x
+
+        if target_x > self.x:
+            start_x = self.x
             end_x = target_x - prevent_self_check
         # otherwise the target is on the right side of the figure and the fields will be searched from
         # the target to the player
         else:
             start_x = target_x + prevent_self_check
-            end_x = self.start_x
+            end_x = self.x
         # in each case by subtracting or adding the variable preventing_self_check, the figures on the end/start of
         # the line won't be viewed
 
         # if target_y is bigger that start_y the destination is "under" the figure
         # fields will be searched from the smallest to the highest
-        if target_y > self.start_y:
-            start_y = self.start_y
+        if target_y > self.y:
+            start_y = self.y
             end_y = target_y - prevent_self_check
         # otherwise the target is below the figure and the fields will be searched from
         # the target to the player
         else:
             start_y = target_y + prevent_self_check
-            end_y = self.start_y
+            end_y = self.y
         # in each case by subtracting or adding the variable preventing_self_check, the figures on the end/start of
         # the line won't be viewed
 
         # if target_y is equal to start_y, just the x-axis has to be searched
-        if target_y == self.start_y:
+        if target_y == self.y:
             for i in range(start_x, end_x):
                 # make exception so that the figure on the start of the line won't be marked as an enemy
-                if i != self.start_x:
+                if i != self.x:
                     # search the field on the coordinate and if there is a figure return True
                     if fields[i][target_y].get_figure() is not None:
                         return True
@@ -127,10 +146,10 @@ class BaseFigure:
             return False
 
         # if target_x is equal to start_x, just the y-axis has to be searched
-        if target_x == self.start_x:
+        if target_x == self.x:
             for i in range(start_y, end_y):
                 # make exception so that the figure on the start of the line won't be marked as an enemy
-                if i != self.start_y:
+                if i != self.y:
                     # search the field on the coordinate and if there is a figure return True
                     if fields[target_x][i].get_figure() is not None:
                         return True
@@ -150,7 +169,7 @@ class BaseFigure:
 
         # it's enough to just work with the delta of the x position, because in order to
         # walk diagonal they have to be equal
-        delta = abs(self.start_x - target_x)
+        delta = abs(self.x - target_x)
 
         # checking if there is an enemy on the target field, to set variable on one, to represent, that it is not an
         # obstacle
@@ -162,14 +181,13 @@ class BaseFigure:
             # saving variable value, to change it later
             j = i
             # if target is on the left side the value has to be negated
-            if self.start_x < target_x:
+            if self.x < target_x:
                 i = i*-1
             # if target is below the value has to be negated
-            if self.start_y < target_y:
+            if self.y < target_y:
                 j = j*-1
-
             # searching the field if there is a figure
-            if fields[target_x + i][target_y + j].get_figure() is not None:
+            if fields[self.x - i][self.y - j].get_figure() is not None:
                 return True
         return False
 

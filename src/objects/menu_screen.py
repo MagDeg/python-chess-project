@@ -51,7 +51,7 @@ class MenuScreen:
 
         if self.start_button_x_pos <= x_pos <= (self.start_button_x_pos + self.start_button_x_size) and self.start_button_y_pos <= y_pos <= (self.start_button_y_pos + self.start_button_y_size):
             # setting figures on fields
-            self.chessboard.place_figure()
+            self.chessboard.place_figures()
             # drawing chessboard with figures
             self.chessboard.draw()
             self.active = False
