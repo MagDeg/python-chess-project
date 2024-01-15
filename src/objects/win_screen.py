@@ -12,9 +12,9 @@ class WinScreen:
         # if one of the kings were killed
         if type(end_object) is King:
             # calling the corresponding winning screen
-            if end_object == Color.BLACK:
+            if end_object.color == Color.BLACK:
                 self.white_winner(surface)
-            if end_object == Color.WHITE:
+            if end_object.color == Color.WHITE:
                 self.black_winner(surface)
         else:
             # it is a draw, no king was killed

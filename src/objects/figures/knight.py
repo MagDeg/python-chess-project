@@ -4,9 +4,6 @@ from functions.color import Color
 
 
 class Knight(BaseFigure):
-    def __init__(self, color, x, y):
-        # calling ParentClass's init method
-        super().__init__(color, x, y)
 
     def check_movement_allowance(self, field, fields):
         # returns true if move is valid and false if it is not

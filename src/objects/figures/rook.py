@@ -4,8 +4,6 @@ from functions.color import Color
 
 
 class Rook(BaseFigure):
-    def __init__(self, color, x, y):
-        super().__init__(color, x, y)
 
     def check_movement_allowance(self, field, fields):
 
