@@ -22,5 +22,6 @@ class Knight(BaseFigure):
         # delta_x == 2 and delta_y == 1 or delta_x == 1 and delta_y == 2
         if (delta_x == 2 and delta_y == 1) or (delta_x == 1 and delta_y == 2):
             return True
+
         return False
 

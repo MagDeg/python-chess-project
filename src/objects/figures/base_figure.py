@@ -189,6 +189,7 @@ class BaseFigure:
             # searching the field if there is a figure
             if fields[self.x - i][self.y - j].get_figure() is not None:
                 return True
+
         return False
 
 

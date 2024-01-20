@@ -13,9 +13,13 @@ class King(BaseFigure):
             return
 
     def check_movement_allowance(self, field, fields):
+        # returns true if move is valid and false if it is not
+
+        # defining local variables for the target
         x = field.x
         y = field.y
 
+        # calculating delta of target and current position
         delta_x = abs(self.x - x)
         delta_y = abs(self.y - y)
 
@@ -40,8 +44,10 @@ class King(BaseFigure):
                         # return special event
                         return "castling"
 
+        # king can only move one field ahead, so the max delta is one
         if (delta_x == delta_y == 1) or (delta_x == 0 and delta_y == 1) or (delta_x == 1 and delta_y == 0):
             return True
+
         return False
 
     def draw(self, x, y, surface, size):
@@ -50,6 +56,7 @@ class King(BaseFigure):
         if not (self.x == x and self.y == y):
             self._change_moved()
 
+        # update current position of figure
         self.refresh_current_position(x, y)
 
         # actual draw method, but first resize to the SingleFiled size

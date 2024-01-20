@@ -49,6 +49,7 @@ class Pawn(BaseFigure):
                 return True
             if (delta_x == -1 or delta_x == 1) and delta_y == -1 and self.color == Color.WHITE:
                 return True
+
         return False
 
     def _change_moved(self):
